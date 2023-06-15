@@ -1,5 +1,8 @@
+Analysis Done by: Vivian Zhao
 
-## Identifying problem 
+## Framing the Problem
+
+Identifying problem 
 
 ### **Prediction Problem:**
 The prediction problem in this case is regression. 
