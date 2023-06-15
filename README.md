@@ -177,7 +177,7 @@ Group Y represents the states ['California', 'Texas', 'Michigan',
 
 **Significance Level:** We used a significance level of **0.05**.
 
-**P-value and Conclusion:** The p-value obtained from the permutation test was **0.31**. Since the p-value is greater than the significance level of 0.05, **we fail to reject the null hypothesis**. Therefore, there is not enough evidence to suggest that our model performs worse for Group X compared to Group Y in terms of R-squared values.
+**P-value and Conclusion:** The p-value obtained from the permutation test was **0.336**. Since the p-value is greater than the significance level of 0.05, **we fail to reject the null hypothesis**. Therefore, there is not enough evidence to suggest that our model performs worse for Group X compared to Group Y in terms of R-squared values.
 
 
 
