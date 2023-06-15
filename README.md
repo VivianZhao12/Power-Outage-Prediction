@@ -1,41 +1,40 @@
 
 ## Identifying problem 
 
-**Prediction Problem:**
-    The prediction problem in this case is regression. 
-    We aim to **predict the severity of a major power outage, specifically the 'OUTAGE.DURATION'.**
+### **Prediction Problem:**
+The prediction problem in this case is regression. 
+We aim to **predict the severity of a major power outage, specifically the 'OUTAGE.DURATION'.(Regression)**
 
-**Response Variable:**
-    The response variable, or the variable we are predicting, can be one of the following:
+### **Response Variable:**
+
+The response variable, or the variable we are predicting, can be one of the following:
 
 **'OUTAGE.DURATION'**: Duration of the power outage in hours.
 
 **Choice of Response Variable:**
 
-Outage Duration is an important metric of measuring outage severity. At the start of an outage, people will be most concerned about how long it will last. The duration of an outage can have significant implications for the affected individuals, businesses, and infrastructure. By predicting the outage duration, we can gain insights into the potential impact, planning, and resource allocation required during such events.
+Outage Duration is an important metric of **measuring outage severity**. At the start of an outage, people will be most concerned about how long it will last. The duration of an outage can have significant implications for the affected individuals, businesses, and infrastructure. By predicting the outage duration, we can gain insights into the potential impact, planning, and resource allocation required during such events.
 
 Understanding the outage duration can help utility companies, emergency response teams, and policymakers make informed decisions and develop strategies to minimize the impact of power outages. It can also aid in the assessment of system vulnerabilities and the development of more robust infrastructure.
 
 **By focusing on the outage duration as the response variable, we can provide valuable information for proactive planning, resource management, and response efforts to mitigate the consequences of major power outages.**
 
-**Information Known at the Time of Prediction:**
-    At the time of prediction, we would know the features that are available up until that point. These features would include the historical data of power outages and the corresponding information such as **'YEAR', 'HURRICANE.NAMES', 'U.S._STATE', 'CLIMATE.REGION', 'ANOMALY.LEVEL', 'CLIMATE.CATEGORY', 'CAUSE.CATEGORY', 'CAUSE.CATEGORY.DETAIL', and 'OUTAGE.START'.**
+### **Information Known at the Time of Prediction:**
+At the time of prediction, we would know the features that are available up until that point. These features would include the historical data of power outages and the corresponding information such as **'YEAR', 'HURRICANE.NAMES', 'U.S._STATE', 'CLIMATE.REGION', 'ANOMALY.LEVEL', 'CLIMATE.CATEGORY', 'CAUSE.CATEGORY', 'CAUSE.CATEGORY.DETAIL', and 'OUTAGE.START'.**
 
-**Metric for Model Evaluation:**
-An appropriate metric for evaluating the regression model could be the Root Mean Squared Error (RMSE).
+### **Metric for Model Evaluation:**
+An appropriate metric for evaluating the regression model could be the R-Squared.
 
-    RMSE is a commonly used metric for regression tasks, including predicting the duration of events. It measures the average magnitude of the residuals, which represent the differences between the predicted outage durations and the actual durations. RMSE has the advantage of penalizing larger errors more strongly than smaller errors, providing a comprehensive assessment of the model's predictive performance.
+**R-Squared** 
+The metric we are using to evaluate our model is the **R-squared (coefficient of determination)**. We chose R-squared as the evaluation metric because we are dealing with a regression problem where we are predicting the duration of outages.
 
-    Using RMSE as the evaluation metric ensures that the model's predictions are as close as possible to the actual outage durations, allowing for a more accurate assessment of the severity of power outages.
+R-squared measures the **proportion of the variance in the target variable (outage duration) that is explained by the independent variables (features) in our model**. It provides an indication of how well the model fits the data and captures the relationship between the predictors and the target variable.
 
-    Other metrics, such as Mean Absolute Error (MAE), R-squared, accuracy, and F1-score can also be considered depending on the specific context and requirements of the prediction problem. However, RMSE is often preferred as it provides a good balance between penalizing large errors and maintaining interpretability.
-    Metrics like accuracy and F1-score are not appropriate for evaluating a regression model, including the prediction of power outage duration. These metrics are primarily designed for classification tasks rather than regression tasks.
+In the context of outage duration prediction, R-squared is a suitable metric because it assesses the overall predictive power of the model. It quantifies the percentage of the variance in outage duration that can be explained by the selected features. A higher R-squared value indicates a better fit of the model to the data, implying that the independent variables are capturing a larger portion of the variation in the target variable.
 
-    Accuracy is a metric commonly used in classification tasks and measures the percentage of correctly classified instances out of the total number of instances. It calculates the ratio of true predictions (both true positives and true negatives) to the total number of predictions. However, in a regression problem, the prediction of a continuous variable, such as outage duration, cannot be directly compared to the actual value on a binary or categorical scale. Thus, accuracy is not meaningful for evaluating the performance of a regression model.
+Accuracy and F1-score are commonly used metrics for classification tasks, where the goal is to predict categorical outcomes. In our case, we are interested in predicting a continuous variable (outage duration), making regression evaluation metrics such as R-squared more appropriate.
 
-    F1-score is a metric that combines precision and recall and is commonly used in binary classification tasks. It provides a balance between the two by considering both false positives and false negatives. However, F1-score is not suitable for regression problems since it requires a defined threshold for classifying the predictions into binary categories, which is not applicable in a continuous variable prediction like outage duration.
-
-    In regression tasks, metrics such as mean squared error (MSE), mean absolute error (MAE), and root mean squared error (RMSE) are more appropriate for evaluating the model's performance. These metrics quantify the difference between the predicted and actual values, providing a measure of the accuracy and precision of the predictions in terms of the magnitude of the errors. 
+Therefore, we chose R-squared as the metric to evaluate our model's performance because it directly measures the goodness of fit of the regression model, providing insights into how well it explains the variability in outage duration based on the selected features.
 
 ### Data Cleaning
 > This dataset contains many null data and unused columns. In order to make the analysis process easier, we should first clean the data. Here is a snippet of the original dataframe (1540 rows, 57 columns).
@@ -103,29 +102,29 @@ So we will create a new column that stores the durations as one of four categori
 
 
 ## Baseline Model
-**Model Description:**
-    The baseline model used in this scenario is a simple linear regression model implemented using scikit-learn. The purpose of the model is to predict the duration of a power outage based on the selected features. The model contains one quantitative variable and one nominal variable.
+### **Model Description:**
+The baseline model used in this scenario is a **simple linear regression model** implemented using scikit-learn. The purpose of the model is to predict the duration of a power outage based on the selected features. **The model contains one quantitative variable and one nominal variable.**
 
-**Features in the Model:**
+### **Features in the Model:**
 The model includes two features:
 
 **'ANOMALY.LEVEL':** This feature is quantitative and represents the anomaly level associated with the power outage. It is treated as a numerical feature and is scaled using the MinMaxScaler within the pipeline.
 
 **'CAUSE.CATEGORY'**: This feature is nominal and represents the category of the cause of the power outage. Since it is a categorical feature, it is encoded using the OneHotEncoder within the pipeline.
 
-**Encodings:**
-    To handle the 'CAUSE.CATEGORY' feature, which is nominal, we apply one-hot encoding using the OneHotEncoder from scikit-learn. This encoding transforms the categorical feature into multiple binary features, each representing a unique category. These binary features are then used as input to the model.
-    We scaled the 'ANOMALY.LEVEL' feature, which is quantitative. This estimator scales and translates each feature individually such that it is in the given range on the training set, (between zero and one).
+### **Encodings:**
+To handle the 'CAUSE.CATEGORY' feature, which is nominal, we apply one-hot encoding using the OneHotEncoder from scikit-learn. This encoding transforms the categorical feature into multiple binary features, each representing a unique category. These binary features are then used as input to the model.
+We scaled the 'ANOMALY.LEVEL' feature, which is quantitative. This estimator scales and translates each feature individually such that it is in the given range on the training set, (between zero and one).
 
-**Performance of the Model:**
+### **Performance of the Model:**
 
-    The performance of the model is evaluated using the R-squared score on the test set, which is approximately 0.132. The R-squared score represents the proportion of the variance in the target variable (outage duration) that can be explained by the selected features and the linear regression model.
+The performance of the model is evaluated using the R-squared score on the test set, which is approximately 0.132. The R-squared score represents the proportion of the variance in the target variable (outage duration) that can be explained by the selected features and the linear regression model.
 
-    In this case, the R-squared score of 0.132 indicates that only around 13.2% of the variability in the power outage duration can be accounted for by the features included in the model. This suggests that the current model has limited ability to accurately capture and predict the complexities of power outage durations based on the selected features alone.
+In this case, the **R-squared score of 0.132 indicates that only around 13.2% of the variability in the power outage duration can be accounted for by the features included in the model.** This suggests that the current model has **limited ability to accurately capture and predict the complexities of power outage durations based on the selected features alone.**
 
-    A higher R-squared score close to 1 would indicate that a larger proportion of the variance in the target variable is explained by the model, indicating a better fit. However, with an R-squared score of 0.069, it is evident that the current model's predictive power is very limited.
+A higher R-squared score close to 1 would indicate that a larger proportion of the variance in the target variable is explained by the model, indicating a better fit. However, with an R-squared score of 0.069, it is evident that the current model's predictive power is very limited.
 
-    Therefore, based on the R-squared score, the current model is not performing well in terms of accurately predicting power outage duration. It is important to explore alternative features, consider more advanced modeling techniques, or incorporate additional relevant data to improve the model's performance and achieve a higher R-squared score, indicating a better fit to the data.
+Therefore, based on the R-squared score, **the current model is not performing well in terms of accurately predicting power outage duration.** It is important to explore alternative features, consider more advanced modeling techniques, or incorporate additional relevant data to improve the model's performance and achieve a higher R-squared score, indicating a better fit to the data.
 
 
 ## Final Model
@@ -142,10 +141,10 @@ The model includes two features:
 
 **'TOTAL.PRICE'**: This feature represents the total price associated with the power outage. It was scaled using the MinMaxScaler to bring it within a similar numerical range as the other features.
 
-**Modeling Algorithm:**
+### **Modeling Algorithm:**
 The **modeling algorithm** chosen for the final model is **RandomForestRegressor**, which is an ensemble method based on decision trees. Random forests can handle complex relationships between features and target variables and are robust against overfitting. The hyperparameters that performed the best were **'n_estimators': 15 and 'max_depth': 1.**
 
-The hyperparameters were tuned using GridSearchCV, which exhaustively searches the specified parameter grid and selects the best combination of hyperparameters based on the R-squared score. The final model with the best hyperparameters achieved an R-squared score of **0.369** on the test set, i**ndicating that it explains approximately 36.9% of the variance in the target variable.**
+The hyperparameters were tuned using GridSearchCV, which exhaustively searches the specified parameter grid and selects the best combination of hyperparameters based on the R-squared score. The final model with the best hyperparameters achieved an R-squared score of **0.369** on the test set, **indicating that it explains approximately 36.9% of the variance in the target variable.**
 
 Compared to the baseline model, the final model shows a significant improvement in performance. The baseline model achieved an R-squared score of **0.132**, while the final model achieved an R-squared score of 0.369. This improvement indicates that the additional features and the RandomForestRegressor model, along with the tuned hyperparameters, **have better captured the underlying patterns and relationships in the data, resulting in a more accurate prediction of the power outage duration.**
 
